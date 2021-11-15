@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Flask mail sending app</h1>
-    <form action="{{url_for('send_message')}}" method="POST">
+    <form action="{{url_for('send_mail')}}" method="POST">
         <input type="email" name="email" placeholder="Email"required id="">
         <input type="text" name="subject" placeholder="Subject" required id="">
         <textarea name="message" id="" cols="30"placeholder="Message" required rows="10"></textarea>
