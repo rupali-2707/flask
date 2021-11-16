@@ -4,14 +4,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 </head>
 <body>
-    <h1>Flask mail sending app</h1>
-    <form action="{{url_for('send_mail')}}" method="POST">
-        <input type="email" name="email" placeholder="Email"required id="">
-        <input type="text" name="subject" placeholder="Subject" required id="">
-        <textarea name="message" id="" cols="30"placeholder="Message" required rows="10"></textarea>
-        <input type="submit" value="send message">
-    </form>
+    <div class="container">
+        <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category,message in messages %}
+          <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+            <span>{{message}}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+        <h1>Flask mail sending app</h1>
+
+
+        <form action="{{url_for('send_mail')}}" method="POST">
+            <input type="text"  name="stmp_email" placeholder="stmp_email" required id="">
+            <input type="text"  name="port" placeholder="Port" required id="">
+            <input type="sender"  name="sender_email" placeholder="sender_email" required id="">
+            <input type="password"  name="password" placeholder="password" required id="">
+
+
+            <input type="email" name="email" placeholder="Email"required id="">
+            <input type="text" name="subject" placeholder="Subject" required id="">
+            <textarea name="message" id="" cols="30"placeholder="Message" required rows="10"></textarea>
+            <input type="submit" value="send message">
+        </form>
+    
+    </div>
+  
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 </body>
 </html>
