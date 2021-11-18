@@ -35,7 +35,7 @@ def send_mail():
     
 
     if request.method=="POST":
-        stmp=request.form['stmp_email']
+        stmp=request.form['smtp_email']
         port=request.form['port']
         sender=request.form['sender_email']
         password=request.form['password']
@@ -45,8 +45,10 @@ def send_mail():
         email=request.form['email']
         subject=request.form['subject']
         msg=request.form['message']
+        email=email.splitlines() #convert into list
+        print(email)
 
-        message=Message(subject,sender=sender,recipients=[email])
+        message=Message(subject,sender=sender,recipients=email)  #passing list of receipents
         message.body=msg
 
         if not (mail.send(message)):

@@ -26,15 +26,16 @@
 
 
         <form action="{{url_for('send_mail')}}" method="POST">
-            <input type="text"  name="stmp_email" placeholder="stmp_email" required id="">
+            <input type="text"  name="smtp_email" placeholder="smtp_email" required id="">
             <input type="text"  name="port" placeholder="Port" required id="">
             <input type="sender"  name="sender_email" placeholder="sender_email" required id="">
             <input type="password"  name="password" placeholder="password" required id="">
 
-
-            <input type="email" name="email" placeholder="Email"required id="">
+            <textarea name="email" name="email" placeholder="Email" id="" cols="30" rows="10" required id=""></textarea>
+            <!-- <input type="email" name="email" placeholder="Email"required id=""> -->
             <input type="text" name="subject" placeholder="Subject" required id="">
-            <textarea name="message" id="" cols="30"placeholder="Message" required rows="10"></textarea>
+           
+           <br> <br> <textarea name="message" id="" cols="30"placeholder="Message" required rows="10"></textarea>
             <input type="submit" value="send message">
         </form>
     
