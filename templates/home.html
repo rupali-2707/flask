@@ -25,18 +25,24 @@
         <h1>Flask mail sending app</h1>
 
 
-        <form action="{{url_for('send_mail')}}" method="POST">
+        <form action="{{url_for('send_mail')}}" method="POST" enctype="multipart/form-data">
             <input type="text"  name="smtp_email" placeholder="smtp_email" required id="">
             <input type="text"  name="port" placeholder="Port" required id="">
             <input type="sender"  name="sender_email" placeholder="sender_email" required id="">
             <input type="password"  name="password" placeholder="password" required id="">
 
-            <textarea name="email" name="email" placeholder="Email" id="" cols="30" rows="10" required id=""></textarea>
+            <textarea name="email" name="email" placeholder="Email" id="" cols="30" rows="10"></textarea>
             <!-- <input type="email" name="email" placeholder="Email"required id=""> -->
             <input type="text" name="subject" placeholder="Subject" required id="">
            
            <br> <br> <textarea name="message" id="" cols="30"placeholder="Message" required rows="10"></textarea>
-            <input type="submit" value="send message">
+            
+           <input type="file" name="file" accept=".csv">
+           <br><br>
+           <input type="submit" name="submit_button" value="bulk sending">
+           
+           <input type="submit" name="submit_button"value="test">
+           <!-- <input type="submit" name="submit_button" value="bulk"> -->
         </form>
     
     </div>
@@ -44,6 +50,7 @@
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 
 </body>
 </html>
