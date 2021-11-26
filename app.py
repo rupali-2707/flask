@@ -77,34 +77,35 @@ def send_mail():
                 des="/".join([target,filename])
                 print("des\t:",des)
                 file.save(des)
-            try:
-                with open(r'C:\Users\lenovo\Desktop\flask\csv_file\{}'.format(filename), newline='') as f:
-                        print("hey")
-                        reader = csv.reader(f)
-                        list1 = list(reader)
+                try:
+                    with open(r'C:\Users\lenovo\Desktop\flask\csv_file\{}'.format(filename), newline='') as f:
+                            print("hey")
+                            reader = csv.reader(f)
+                            list1 = list(reader)
 
-                print(list1) 
-                flat_list = []
-                for sublist in list1:
-                        for item in sublist:
-                            flat_list.append(item)
-                print(flat_list)
+                    print(list1) 
+                    flat_list = []
+                    for sublist in list1:
+                            for item in sublist:
+                                flat_list.append(item)
+                    print(flat_list)
 
-            # if request.form["submit_button"]=='bulk':
-                if not flat_list:
-                            flash("you did not load properly","danger")
-                else:
-                                message=Message(subject,sender=sender,recipients=flat_list)  #passing list of receipents
-                                message.body=msg
+                    if request.form["submit_button"]=='bulk sending':
+                        if not flat_list:
+                                    flash("you did not load properly","danger")
+                        else:
+                                        message=Message(subject,sender=sender,recipients=flat_list)  #passing list of receipents
+                                        message.body=msg
 
-                                if not (mail.send(message)):
-                                    flash("Mail sent Successful","success")
-                                    return redirect(request.url)
-                                flash("Mail send Failed","danger")
-                                return redirect(request.url)
-            except:
-                flash("you did not load properly","danger")
-                return redirect(request.url)
+                                        if not (mail.send(message)):
+                                            flash("Bulk Mail sent Successful","success")
+                                            # return redirect(request.url)
+                                        else:
+                                             flash("Bulk Mail send Failed","danger")
+                                        # return redirect(request.url)
+                except:
+                    flash("you did not load properly","danger")
+                    return redirect(request.url)
 
     return render_template("home.html")
 if __name__=="__main__":

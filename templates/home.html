@@ -1,56 +1,161 @@
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script data-require="jquery" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 </head>
-<body>
-    <div class="container">
-        <br>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
+
+<body style="background: #0ed2f7;  
+background: -webkit-linear-gradient(to right,  #b2fefa, #0ed2f7); 
+background: linear-gradient(to right,   #c9d6ff, #e2e2e2); 
+">
+  <!-- 
+style="background: #fcb69f;  
+background: -webkit-linear-gradient(to right,  #ffecd2 , #fcb69f);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right,   #ffecd2 , #fcb69f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+" -->
+
+  <div class="container">
+    <br>
+    <br>
+    <form action="{{url_for('send_mail')}}" method="POST" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col">
+          <h3>
+            <center>SMTP Credentials</center>
+          </h3>
+          <br>
+          <input type="text" class="form-control" name="smtp_email" placeholder="smtp_email" required id="">
+          <br>
+          <input type="text" class="form-control" name="port" placeholder="Port" required id="">
+          <br>
+          <input type="sender" class="form-control" name="sender_email" placeholder="sender_email" required id="">
+          <br>
+          <input type="password" class="form-control" name="password" placeholder="password" required id="">
+        </div>
+
+
+        <div class="col">
+          <h1>
+            <center>Mail Zone</center>
+          </h1>
+          <br>
+          <textarea name="email" class="form-control" placeholder="Recepients
+                " id="" cols="10" rows="5"></textarea>
+          <!-- <input type="email" name="email" placeholder="Email"required id=""> -->
+          <br>
+          <input type="text" name="subject" class="form-control" placeholder="Subject" required id="">
+          <br>
+          <textarea name="message" class="form-control" id="" cols="10" placeholder="Body" required rows="5"></textarea>
+          <br><br>
+          <input type="submit" name="submit_button" value="bulk sending">
+
+          <input type="submit" name="submit_button" value="test">
+        </div>
+        <div class="col">
+          <h3>
+            <center>File Zone</center>
+          </h3>
+
+
+          <!-- <input type="file" name="file"  multiple> -->
+          <input id="myInput" type="file" name="file" accept=".csv" multiple style="display:none" />
+    
+          <button id="myButton" type="button" style="border-radius: 5px; background-color: #fff; color: green;">+ Add Files</button>
+          <!-- <button id="mySubmitButton" type="button" style="border-radius: 5px; background-color: #fff; color: green;">Send Files</button> -->
+          <br><br>
+          <div id="myFiles"></div>
+          <!-- <input id="myInput" type="file" name="file" multiple style="display:none" accept=".csv" />
+
+          <button id="myButton" type="button" style="border-radius: 5px; background-color: #fff; color: green;">+ Add
+            Files</button>
+          <div id="myFiles"></div> -->
+          <br><br>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
           {% for category,message in messages %}
           <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
             <span>{{message}}</span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           {% endfor %}
-        {% endif %}
-      {% endwith %}
-        <h1>Flask mail sending app</h1>
+          {% endif %}
+          {% endwith %}
+        </div>
+      </div>
+    </form>
+  </div>
 
 
-        <form action="{{url_for('send_mail')}}" method="POST" enctype="multipart/form-data">
-            <input type="text"  name="smtp_email" placeholder="smtp_email" required id="">
-            <input type="text"  name="port" placeholder="Port" required id="">
-            <input type="sender"  name="sender_email" placeholder="sender_email" required id="">
-            <input type="password"  name="password" placeholder="password" required id="">
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+    <script>
+      $(function(){
+let inputFile = $('#myInput');
+let button = $('#myButton');
+// let buttonSubmit = $('#mySubmitButton');
+let filesContainer = $('#myFiles');
+let files = [];
 
-            <textarea name="email" name="email" placeholder="Email" id="" cols="30" rows="10"></textarea>
-            <!-- <input type="email" name="email" placeholder="Email"required id=""> -->
-            <input type="text" name="subject" placeholder="Subject" required id="">
-           
-           <br> <br> <textarea name="message" id="" cols="30"placeholder="Message" required rows="10"></textarea>
-            
-           <input type="file" name="file" accept=".csv">
-           <br><br>
-           <input type="submit" name="submit_button" value="bulk sending">
-           
-           <input type="submit" name="submit_button"value="test">
-           <!-- <input type="submit" name="submit_button" value="bulk"> -->
-        </form>
-    
-    </div>
+inputFile.change(function() {
+  let newFiles = []; 
+  for(let index = 0; index < inputFile[0].files.length; index++) {
+    let file = inputFile[0].files[index];
+    newFiles.push(file);
+    files.push(file);
+  }
   
+  newFiles.forEach(file => {
+    let fileElement = $(`<p>${file.name}</p>`);
+    fileElement.data('fileData', file);
+    filesContainer.append(fileElement);
+    
+    fileElement.click(function(event) {
+      let fileElement = $(event.target);
+      let indexToRemove = files.indexOf(fileElement.data('fileData'));
+      fileElement.remove();
+      files.splice(indexToRemove, 1);
+    });
+  });
+});
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+button.click(function() {
+  inputFile.click();
+});
 
-
+// buttonSubmit.click(function() {
+//   let formData = new FormData();
+  
+//   files.forEach(file => {
+//     /* here I just put file as file[] so now in submitting it will send all 
+//     files */
+//     formData.append('file[]', file);
+//   });
+  
+//   console.log('Sending...');
+  
+//   $.ajax({
+//     url: 'C:\Users\lenovo\Desktop\flask\csv_file\\',
+//     data: formData,
+//     type: 'POST',
+//     success: function(data) { console.log('SUCCESS !!!'); },
+//     error: function(data) { console.log('ERROR !!!'); },
+//     cache: false,
+//     processData: false,
+//     contentType: false
+//   });
+// });
+});
+  </script>
 </body>
+
 </html>
